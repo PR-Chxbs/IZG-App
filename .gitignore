@@ -13,3 +13,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# IDE
+.idea/
+!.idea/codeStyles/
+!.idea/runConfigurations/
+!.idea/inspectionProfiles/
+
+# Gradle
+.gradle/
+build/
+**/build/
