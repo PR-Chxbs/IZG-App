@@ -70,4 +70,7 @@ dependencies {
     // Dagger (Hilt)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    // Datastore
+    implementation(libs.datastore.preferences)
 }

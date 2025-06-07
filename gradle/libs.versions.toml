@@ -17,6 +17,9 @@ retrofit = "2.9.0"
 hilt = "2.48"
 kotlinCompilerExtension = "1.5.5"
 
+# Datastore
+datastore = "1.0.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -41,6 +44,9 @@ retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref 
 # Dagger (Hilt)
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+# Datastore
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
