@@ -4,28 +4,29 @@ import com.prince.izg.data.remote.api.StockApi
 import com.prince.izg.data.remote.dto.Stock.StockRequest
 import com.prince.izg.data.remote.dto.Stock.StockResponse
 import javax.inject.Inject
+import retrofit2.Response
 
 class StockRepository @Inject constructor(
     private val stockApi: StockApi
 ) {
 
-    suspend fun addStock(token: String, stock: StockRequest): StockResponse {
+    suspend fun addStock(token: String, stock: StockRequest): Response<StockResponse> {
         return stockApi.addStock("Bearer $token", stock)
     }
 
-    suspend fun getStockItems(): List<StockResponse> {
+    suspend fun getStockItems(): Response<List<StockResponse>> {
         return stockApi.getStockItems()
     }
 
-    suspend fun getStockItemById(id: Int): StockResponse {
+    suspend fun getStockItemById(id: Int): Response<StockResponse> {
         return stockApi.getStockItemById(id)
     }
 
-    suspend fun updateStockItem(token: String, id: Int, stock: StockRequest): StockResponse {
+    suspend fun updateStockItem(token: String, id: Int, stock: StockRequest): Response<StockResponse> {
         return stockApi.updateStockItemById("Bearer $token", id, stock)
     }
 
-    suspend fun deleteStockItem(token: String, id: Int): StockResponse {
+    suspend fun deleteStockItem(token: String, id: Int): Response<StockResponse> {
         return stockApi.deleteStockItemById("Bearer $token", id)
     }
 }
