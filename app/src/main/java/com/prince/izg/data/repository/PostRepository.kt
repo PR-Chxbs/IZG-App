@@ -18,7 +18,7 @@ class PostRepository @Inject constructor(
     }
 
     suspend fun getPostById(token: String, id: Int): PostResponse {
-        return postApi.getPostById("Bearer $token", id)
+        return postApi.getPostById(id)
     }
 
     suspend fun updatePost(token: String, id: Int, post: PostRequest): PostResponse {

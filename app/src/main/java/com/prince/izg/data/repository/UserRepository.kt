@@ -4,7 +4,7 @@ import com.prince.izg.data.remote.api.UserApi
 import com.prince.izg.data.remote.dto.User.UserRequest
 import com.prince.izg.data.remote.dto.User.UserResponse
 
-class UserRepository(
+class UserRepository @Inject constructor(
     private val userApi: UserApi
 ) {
     suspend fun addUser(token: String, user: UserRequest): UserResponse {
