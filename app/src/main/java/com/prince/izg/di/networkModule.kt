@@ -1,4 +1,4 @@
-package com.prince.izg.data.remote
+package com.prince.izg.di
 
 import com.prince.izg.data.remote.api.*
 import com.prince.izg.util.Constants
@@ -27,7 +27,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)  // e.g. "https://yourapi.com/api/"
+            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
