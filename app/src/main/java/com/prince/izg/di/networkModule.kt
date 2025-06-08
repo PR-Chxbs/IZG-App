@@ -1,7 +1,7 @@
 package com.prince.izg.di
 
 import com.prince.izg.data.remote.api.*
-import com.prince.izg.util.Constants
+import com.prince.izg.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
