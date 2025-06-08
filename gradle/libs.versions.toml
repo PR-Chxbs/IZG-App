@@ -9,6 +9,17 @@ lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
 
+# ----------- PR Added ----------- #
+# Retrofit 2
+retrofit = "2.9.0"
+
+# Dagger (Hilt)
+hilt = "2.48"
+kotlinCompilerExtension = "1.5.5"
+
+# Datastore
+datastore = "1.0.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -25,8 +36,23 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
+# ----------- PR Added ----------- #
+# Retrofit 2
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+
+# Dagger (Hilt)
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+
+# Datastore
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
+# ----------- PR Added ----------- #
+# Dagger (Hilt)
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
