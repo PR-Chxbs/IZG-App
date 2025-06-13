@@ -73,4 +73,10 @@ dependencies {
 
     // Datastore
     implementation(libs.datastore.preferences)
+
+    // Hilt Navigation
+    implementation(libs.hilt.navigation.compose)
+
+    // Javapoet
+    implementation(libs.javapoet)
 }
