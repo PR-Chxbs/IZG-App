@@ -64,4 +64,7 @@ dependencies {
 
     // Datastore
     implementation(libs.datastore.preferences)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
 }

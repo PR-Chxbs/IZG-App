@@ -16,6 +16,9 @@ retrofit = "2.9.0"
 # Datastore
 datastore = "1.0.0"
 
+# Navigation
+navigation = "2.7.7"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -39,6 +42,9 @@ retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref 
 
 # Datastore
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+# Navigation
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
