@@ -19,6 +19,7 @@ fun RegisterScreen(
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     // When registration is successful, redirect to login
     LaunchedEffect(success) {
@@ -64,8 +65,18 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(
-            onClick = { authViewModel.register(name, email, password) },
+            onClick = { authViewModel.register(name, email, password, confirmPassword) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Register")

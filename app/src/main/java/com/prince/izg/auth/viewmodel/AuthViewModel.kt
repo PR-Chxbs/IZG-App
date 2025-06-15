@@ -72,7 +72,13 @@ class AuthViewModel(
         }
     }
 
-    fun register(username: String, email: String, password: String) {
+    fun register(username: String, email: String, password: String, confirmPassword: String) {
+        if (password != confirmPassword) {
+            _authError.value = "Password doesn't match"
+            _authSuccess.value = false
+            return
+        }
+
         viewModelScope.launch {
             try {
                 val response = authRepository.registerUser(
