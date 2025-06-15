@@ -3,7 +3,6 @@ package com.prince.izg.data.repository
 import com.prince.izg.data.remote.api.StockApi
 import com.prince.izg.data.remote.dto.Stock.StockRequest
 import com.prince.izg.data.remote.dto.Stock.StockResponse
-import javax.inject.Inject
 import retrofit2.Response
 
 class StockRepository(

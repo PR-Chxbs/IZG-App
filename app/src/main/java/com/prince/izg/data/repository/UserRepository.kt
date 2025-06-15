@@ -4,7 +4,6 @@ import com.prince.izg.data.remote.api.UserApi
 import com.prince.izg.data.remote.dto.User.UserRequest
 import com.prince.izg.data.remote.dto.User.UserResponse
 import retrofit2.Response
-import javax.inject.Inject
 
 class UserRepository(
     private val userApi: UserApi

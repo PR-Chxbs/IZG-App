@@ -4,7 +4,6 @@ import com.prince.izg.data.remote.api.EventApi
 import com.prince.izg.data.remote.dto.Event.EventRequest
 import com.prince.izg.data.remote.dto.Event.EventResponse
 import retrofit2.Response
-import javax.inject.Inject
 
 class EventRepository(
     private val eventApi: EventApi

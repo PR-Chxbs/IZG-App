@@ -4,7 +4,6 @@ import com.prince.izg.data.remote.api.PostApi
 import com.prince.izg.data.remote.dto.Post.PostRequest
 import com.prince.izg.data.remote.dto.Post.PostResponse
 import retrofit2.Response
-import javax.inject.Inject
 
 class PostRepository(
     private val postApi: PostApi

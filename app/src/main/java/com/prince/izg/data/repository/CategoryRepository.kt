@@ -4,7 +4,6 @@ import com.prince.izg.data.remote.api.CategoryApi
 import com.prince.izg.data.remote.dto.Category.CategoryRequest
 import com.prince.izg.data.remote.dto.Category.CategoryResponse
 import retrofit2.Response
-import javax.inject.Inject
 
 class CategoryRepository(
     private val categoryApi: CategoryApi
