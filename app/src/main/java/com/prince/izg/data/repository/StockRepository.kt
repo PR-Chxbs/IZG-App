@@ -6,7 +6,7 @@ import com.prince.izg.data.remote.dto.Stock.StockResponse
 import javax.inject.Inject
 import retrofit2.Response
 
-class StockRepository @Inject constructor(
+class StockRepository(
     private val stockApi: StockApi
 ) {
 

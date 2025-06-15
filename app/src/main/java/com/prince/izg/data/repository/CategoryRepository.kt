@@ -6,7 +6,7 @@ import com.prince.izg.data.remote.dto.Category.CategoryResponse
 import retrofit2.Response
 import javax.inject.Inject
 
-class CategoryRepository @Inject constructor(
+class CategoryRepository(
     private val categoryApi: CategoryApi
 ) {
 

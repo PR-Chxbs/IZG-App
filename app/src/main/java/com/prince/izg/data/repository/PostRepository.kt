@@ -6,7 +6,7 @@ import com.prince.izg.data.remote.dto.Post.PostResponse
 import retrofit2.Response
 import javax.inject.Inject
 
-class PostRepository @Inject constructor(
+class PostRepository(
     private val postApi: PostApi
 ) {
 

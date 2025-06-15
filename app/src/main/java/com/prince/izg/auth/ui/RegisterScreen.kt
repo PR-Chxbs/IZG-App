@@ -6,12 +6,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.prince.izg.auth.viewmodel.AuthViewModel
 
 @Composable
 fun RegisterScreen(
-    authViewModel: AuthViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel,
     onNavigateToLogin: () -> Unit
 ) {
     val error by authViewModel.authError.collectAsState()

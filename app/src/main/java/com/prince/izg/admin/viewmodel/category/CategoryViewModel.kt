@@ -1,39 +1,37 @@
-package com.prince.izg.admin.viewmodel.event
+package com.prince.izg.admin.viewmodel.category
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prince.izg.data.remote.dto.Event.EventRequest
-import com.prince.izg.data.remote.dto.Event.EventResponse
-import com.prince.izg.data.repository.EventRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.prince.izg.data.remote.dto.Category.CategoryRequest
+import com.prince.izg.data.remote.dto.Category.CategoryResponse
+import com.prince.izg.data.repository.CategoryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-data class EventUiState(
-    val events: List<EventResponse> = emptyList(),
-    val selectedEvent: EventResponse? = null,
+data class CategoryUiState(
+    val categories: List<CategoryResponse> = emptyList(),
+    val selectedCategory: CategoryResponse? = null,
     val isLoading: Boolean = false,
     val error: String? = null
 )
 
-@HiltViewModel
-class EventViewModel @Inject constructor(
-    private val eventRepository: EventRepository
+class CategoryViewModel(
+    private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(EventUiState())
-    val uiState: StateFlow<EventUiState> = _uiState
+    private val _uiState = MutableStateFlow(CategoryUiState())
+    val uiState: StateFlow<CategoryUiState> = _uiState
 
-    fun getEvents(token: String) {
+    fun getCategories(token: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = eventRepository.getEvents()
+                val response = categoryRepository.getCategories()
                 if (response.isSuccessful) {
-                    _uiState.update { it.copy(events = response.body() ?: emptyList(), isLoading = false) }
+                    val categories = response.body() ?: emptyList()
+                    _uiState.update { it.copy(categories = categories, isLoading = false) }
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -43,13 +41,13 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun getEventById(token: String, id: Int) {
+    fun getCategoryById(token: String, id: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = eventRepository.getEventById(id)
+                val response = categoryRepository.getCategoryById(id)
                 if (response.isSuccessful) {
-                    _uiState.update { it.copy(selectedEvent = response.body(), isLoading = false) }
+                    _uiState.update { it.copy(selectedCategory = response.body(), isLoading = false) }
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -59,13 +57,13 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun addEvent(token: String, event: EventRequest) {
+    fun addCategory(token: String, category: CategoryRequest) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = eventRepository.addEvent(token, event)
+                val response = categoryRepository.addCategory(category)
                 if (response.isSuccessful) {
-                    getEvents(token)
+                    getCategories(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -75,13 +73,13 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun updateEvent(token: String, id: Int, event: EventRequest) {
+    fun updateCategory(token: String, id: Int, category: CategoryRequest) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = eventRepository.updateEvent(token, id, event)
+                val response = categoryRepository.updateCategory(token, id, category)
                 if (response.isSuccessful) {
-                    getEvents(token)
+                    getCategories(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -91,13 +89,13 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun deleteEvent(token: String, id: Int) {
+    fun deleteCategory(token: String, id: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = eventRepository.deleteEvent(token, id)
+                val response = categoryRepository.deleteCategory(token, id)
                 if (response.isSuccessful) {
-                    getEvents(token)
+                    getCategories(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -107,8 +105,8 @@ class EventViewModel @Inject constructor(
         }
     }
 
-    fun clearSelectedEvent() {
-        _uiState.update { it.copy(selectedEvent = null) }
+    fun clearSelectedCategory() {
+        _uiState.update { it.copy(selectedCategory = null) }
     }
 
     fun clearError() {

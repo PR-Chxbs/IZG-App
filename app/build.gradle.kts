@@ -2,11 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-
-    // ----------- PR Added ----------- //
-    // Dagger (Hilt)
-    alias(libs.plugins.hilt)
-    kotlin("kapt")
 }
 
 android {
@@ -67,16 +62,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
 
-    // Dagger (Hilt)
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
     // Datastore
     implementation(libs.datastore.preferences)
-
-    // Hilt Navigation
-    implementation(libs.hilt.navigation.compose)
-
-    // Javapoet
-    implementation(libs.javapoet)
 }

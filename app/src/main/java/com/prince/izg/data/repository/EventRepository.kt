@@ -6,7 +6,7 @@ import com.prince.izg.data.remote.dto.Event.EventResponse
 import retrofit2.Response
 import javax.inject.Inject
 
-class EventRepository @Inject constructor(
+class EventRepository(
     private val eventApi: EventApi
 ) {
 

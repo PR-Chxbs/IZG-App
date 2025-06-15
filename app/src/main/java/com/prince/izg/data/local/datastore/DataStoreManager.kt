@@ -6,15 +6,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
-import javax.inject.Singleton
 
 private const val DATASTORE_NAME = "izg_prefs"
 
 private val Context.dataStore by preferencesDataStore(name = DATASTORE_NAME)
 
-@Singleton
-class DataStoreManager @Inject constructor(
+class DataStoreManager(
     private val context: Context
 ) {
 

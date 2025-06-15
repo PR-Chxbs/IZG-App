@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.prince.izg.data.remote.dto.User.UserRequest
 import com.prince.izg.data.remote.dto.User.UserResponse
 import com.prince.izg.data.repository.UserRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class UserUiState(
     val users: List<UserResponse> = emptyList(),
@@ -19,8 +17,7 @@ data class UserUiState(
     val error: String? = null
 )
 
-@HiltViewModel
-class UserViewModel @Inject constructor(
+class UserViewModel(
     private val userRepository: UserRepository
 ) : ViewModel() {
 

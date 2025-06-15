@@ -1,9 +1,6 @@
-// com.prince.izg.navigation.AuthNavGraph.kt
-
 package com.prince.izg.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,9 +9,10 @@ import com.prince.izg.auth.ui.RegisterScreen
 import com.prince.izg.auth.viewmodel.AuthViewModel
 
 @Composable
-fun AuthNavGraph(navController: NavHostController) {
-    val authViewModel: AuthViewModel = hiltViewModel()
-
+fun AuthNavGraph(
+    navController: NavHostController,
+    authViewModel: AuthViewModel  // <-- Now passed as a parameter
+) {
     NavHost(
         navController = navController,
         startDestination = Screen.Login.route
@@ -23,7 +21,7 @@ fun AuthNavGraph(navController: NavHostController) {
             LoginScreen(
                 authViewModel = authViewModel,
                 onLoginSuccess = {
-                    // TODO: Navigate to admin dashboard or user home
+                    // Navigate as needed
                 },
                 onNavigateToRegister = {
                     navController.navigate(Screen.Register.route)

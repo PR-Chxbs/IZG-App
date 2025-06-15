@@ -1,39 +1,36 @@
-package com.prince.izg.admin.viewmodel.stock
+package com.prince.izg.admin.viewmodel.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prince.izg.data.remote.dto.Stock.StockRequest
-import com.prince.izg.data.remote.dto.Stock.StockResponse
-import com.prince.izg.data.repository.StockRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.prince.izg.data.remote.dto.Event.EventRequest
+import com.prince.izg.data.remote.dto.Event.EventResponse
+import com.prince.izg.data.repository.EventRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-data class StockUiState(
-    val stockItems: List<StockResponse> = emptyList(),
-    val selectedStockItem: StockResponse? = null,
+data class EventUiState(
+    val events: List<EventResponse> = emptyList(),
+    val selectedEvent: EventResponse? = null,
     val isLoading: Boolean = false,
     val error: String? = null
 )
 
-@HiltViewModel
-class StockViewModel @Inject constructor(
-    private val stockRepository: StockRepository
+class EventViewModel(
+    private val eventRepository: EventRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(StockUiState())
-    val uiState: StateFlow<StockUiState> = _uiState
+    private val _uiState = MutableStateFlow(EventUiState())
+    val uiState: StateFlow<EventUiState> = _uiState
 
-    fun getAllStock(token: String) {
+    fun getEvents(token: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = stockRepository.getStockItems()
+                val response = eventRepository.getEvents()
                 if (response.isSuccessful) {
-                    _uiState.update { it.copy(stockItems = response.body() ?: emptyList(), isLoading = false) }
+                    _uiState.update { it.copy(events = response.body() ?: emptyList(), isLoading = false) }
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -43,13 +40,13 @@ class StockViewModel @Inject constructor(
         }
     }
 
-    fun getStockById(token: String, id: Int) {
+    fun getEventById(token: String, id: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = stockRepository.getStockItemById(id)
+                val response = eventRepository.getEventById(id)
                 if (response.isSuccessful) {
-                    _uiState.update { it.copy(selectedStockItem = response.body(), isLoading = false) }
+                    _uiState.update { it.copy(selectedEvent = response.body(), isLoading = false) }
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -59,13 +56,13 @@ class StockViewModel @Inject constructor(
         }
     }
 
-    fun addStock(token: String, stock: StockRequest) {
+    fun addEvent(token: String, event: EventRequest) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = stockRepository.addStock(token, stock)
+                val response = eventRepository.addEvent(token, event)
                 if (response.isSuccessful) {
-                    getAllStock(token)
+                    getEvents(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -75,13 +72,13 @@ class StockViewModel @Inject constructor(
         }
     }
 
-    fun updateStock(token: String, id: Int, stock: StockRequest) {
+    fun updateEvent(token: String, id: Int, event: EventRequest) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = stockRepository.updateStockItem(token, id, stock)
+                val response = eventRepository.updateEvent(token, id, event)
                 if (response.isSuccessful) {
-                    getAllStock(token)
+                    getEvents(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -91,13 +88,13 @@ class StockViewModel @Inject constructor(
         }
     }
 
-    fun deleteStock(token: String, id: Int) {
+    fun deleteEvent(token: String, id: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = stockRepository.deleteStockItem(token, id)
+                val response = eventRepository.deleteEvent(token, id)
                 if (response.isSuccessful) {
-                    getAllStock(token)
+                    getEvents(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -107,8 +104,8 @@ class StockViewModel @Inject constructor(
         }
     }
 
-    fun clearSelectedStock() {
-        _uiState.update { it.copy(selectedStockItem = null) }
+    fun clearSelectedEvent() {
+        _uiState.update { it.copy(selectedEvent = null) }
     }
 
     fun clearError() {

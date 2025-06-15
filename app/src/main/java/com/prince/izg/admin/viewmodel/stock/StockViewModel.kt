@@ -1,40 +1,36 @@
-package com.prince.izg.admin.viewmodel.category
+package com.prince.izg.admin.viewmodel.stock
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prince.izg.data.remote.dto.Category.CategoryRequest
-import com.prince.izg.data.remote.dto.Category.CategoryResponse
-import com.prince.izg.data.repository.CategoryRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.prince.izg.data.remote.dto.Stock.StockRequest
+import com.prince.izg.data.remote.dto.Stock.StockResponse
+import com.prince.izg.data.repository.StockRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-data class CategoryUiState(
-    val categories: List<CategoryResponse> = emptyList(),
-    val selectedCategory: CategoryResponse? = null,
+data class StockUiState(
+    val stockItems: List<StockResponse> = emptyList(),
+    val selectedStockItem: StockResponse? = null,
     val isLoading: Boolean = false,
     val error: String? = null
 )
 
-@HiltViewModel
-class CategoryViewModel @Inject constructor(
-    private val categoryRepository: CategoryRepository
+class StockViewModel(
+    private val stockRepository: StockRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CategoryUiState())
-    val uiState: StateFlow<CategoryUiState> = _uiState
+    private val _uiState = MutableStateFlow(StockUiState())
+    val uiState: StateFlow<StockUiState> = _uiState
 
-    fun getCategories(token: String) {
+    fun getAllStock(token: String) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = categoryRepository.getCategories()
+                val response = stockRepository.getStockItems()
                 if (response.isSuccessful) {
-                    val categories = response.body() ?: emptyList()
-                    _uiState.update { it.copy(categories = categories, isLoading = false) }
+                    _uiState.update { it.copy(stockItems = response.body() ?: emptyList(), isLoading = false) }
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -44,13 +40,13 @@ class CategoryViewModel @Inject constructor(
         }
     }
 
-    fun getCategoryById(token: String, id: Int) {
+    fun getStockById(token: String, id: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = categoryRepository.getCategoryById(id)
+                val response = stockRepository.getStockItemById(id)
                 if (response.isSuccessful) {
-                    _uiState.update { it.copy(selectedCategory = response.body(), isLoading = false) }
+                    _uiState.update { it.copy(selectedStockItem = response.body(), isLoading = false) }
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -60,13 +56,13 @@ class CategoryViewModel @Inject constructor(
         }
     }
 
-    fun addCategory(token: String, category: CategoryRequest) {
+    fun addStock(token: String, stock: StockRequest) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = categoryRepository.addCategory(category)
+                val response = stockRepository.addStock(token, stock)
                 if (response.isSuccessful) {
-                    getCategories(token)
+                    getAllStock(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -76,13 +72,13 @@ class CategoryViewModel @Inject constructor(
         }
     }
 
-    fun updateCategory(token: String, id: Int, category: CategoryRequest) {
+    fun updateStock(token: String, id: Int, stock: StockRequest) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = categoryRepository.updateCategory(token, id, category)
+                val response = stockRepository.updateStockItem(token, id, stock)
                 if (response.isSuccessful) {
-                    getCategories(token)
+                    getAllStock(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -92,13 +88,13 @@ class CategoryViewModel @Inject constructor(
         }
     }
 
-    fun deleteCategory(token: String, id: Int) {
+    fun deleteStock(token: String, id: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val response = categoryRepository.deleteCategory(token, id)
+                val response = stockRepository.deleteStockItem(token, id)
                 if (response.isSuccessful) {
-                    getCategories(token)
+                    getAllStock(token)
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
                 }
@@ -108,8 +104,8 @@ class CategoryViewModel @Inject constructor(
         }
     }
 
-    fun clearSelectedCategory() {
-        _uiState.update { it.copy(selectedCategory = null) }
+    fun clearSelectedStock() {
+        _uiState.update { it.copy(selectedStockItem = null) }
     }
 
     fun clearError() {

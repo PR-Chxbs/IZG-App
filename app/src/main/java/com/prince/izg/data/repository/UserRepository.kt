@@ -6,7 +6,7 @@ import com.prince.izg.data.remote.dto.User.UserResponse
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class UserRepository(
     private val userApi: UserApi
 ) {
     suspend fun addUser(token: String, user: UserRequest): Response<UserResponse> {

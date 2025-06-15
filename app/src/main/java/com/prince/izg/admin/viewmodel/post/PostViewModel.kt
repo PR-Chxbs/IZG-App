@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.prince.izg.data.remote.dto.Post.PostRequest
 import com.prince.izg.data.remote.dto.Post.PostResponse
 import com.prince.izg.data.repository.PostRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class PostUiState(
     val posts: List<PostResponse> = emptyList(),
@@ -19,8 +17,7 @@ data class PostUiState(
     val error: String? = null
 )
 
-@HiltViewModel
-class PostViewModel @Inject constructor(
+class PostViewModel(
     private val postRepository: PostRepository
 ) : ViewModel() {
 

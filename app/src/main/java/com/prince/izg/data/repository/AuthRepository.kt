@@ -6,12 +6,10 @@ import com.prince.izg.data.remote.dto.Auth.LoginResponse
 import com.prince.izg.data.remote.dto.Auth.RegisterRequest
 import com.prince.izg.data.remote.dto.Auth.RegisterResponse
 import retrofit2.Response
-import javax.inject.Inject
 
-class AuthRepository @Inject constructor(
+class AuthRepository(
     private val authApi: AuthApi
 ) {
-
     suspend fun registerUser(registerRequest: RegisterRequest): Response<RegisterResponse> {
         return authApi.register(registerRequest)
     }
