@@ -1,4 +1,4 @@
-package com.prince.izg.admin.viewmodel
+package com.prince.izg.admin.viewmodel.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
