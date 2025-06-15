@@ -1,16 +1,14 @@
-package com.prince.izg.admin.viewmodel.category
+package com.prince.izg.admin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prince.izg.data.remote.dto.Category.CategoryRequest
 import com.prince.izg.data.remote.dto.Category.CategoryResponse
 import com.prince.izg.data.repository.CategoryRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class CategoryUiState(
     val categories: List<CategoryResponse> = emptyList(),
@@ -19,8 +17,7 @@ data class CategoryUiState(
     val error: String? = null
 )
 
-@HiltViewModel
-class CategoryViewModel @Inject constructor(
+class CategoryViewModel(
     private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 

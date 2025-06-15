@@ -1,16 +1,14 @@
-package com.prince.izg.admin.viewmodel.event
+package com.prince.izg.admin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prince.izg.data.remote.dto.Event.EventRequest
 import com.prince.izg.data.remote.dto.Event.EventResponse
 import com.prince.izg.data.repository.EventRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class EventUiState(
     val events: List<EventResponse> = emptyList(),
@@ -19,8 +17,7 @@ data class EventUiState(
     val error: String? = null
 )
 
-@HiltViewModel
-class EventViewModel @Inject constructor(
+class EventViewModel(
     private val eventRepository: EventRepository
 ) : ViewModel() {
 

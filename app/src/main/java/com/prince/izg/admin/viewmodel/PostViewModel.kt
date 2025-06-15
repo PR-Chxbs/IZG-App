@@ -1,4 +1,4 @@
-package com.prince.izg.admin.viewmodel.post
+package com.prince.izg.admin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,8 +19,7 @@ data class PostUiState(
     val error: String? = null
 )
 
-@HiltViewModel
-class PostViewModel @Inject constructor(
+class PostViewModel(
     private val postRepository: PostRepository
 ) : ViewModel() {
 

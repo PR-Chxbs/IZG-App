@@ -1,4 +1,4 @@
-package com.prince.izg.admin.viewmodel.user
+package com.prince.izg.admin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,8 +19,7 @@ data class UserUiState(
     val error: String? = null
 )
 
-@HiltViewModel
-class UserViewModel @Inject constructor(
+class UserViewModel(
     private val userRepository: UserRepository
 ) : ViewModel() {
 

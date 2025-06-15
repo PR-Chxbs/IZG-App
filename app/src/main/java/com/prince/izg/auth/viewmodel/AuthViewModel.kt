@@ -2,24 +2,19 @@ package com.prince.izg.auth.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import java.io.IOException
 import retrofit2.HttpException
 
 // Project packages
-
 import com.prince.izg.data.local.datastore.DataStoreManager
 import com.prince.izg.data.remote.dto.Auth.LoginRequest
 import com.prince.izg.data.remote.dto.Auth.RegisterRequest
 import com.prince.izg.data.repository.AuthRepository
 
-@HiltViewModel
-class AuthViewModel @Inject constructor(
+class AuthViewModel(
     private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
@@ -80,15 +75,18 @@ class AuthViewModel @Inject constructor(
     fun register(username: String, email: String, password: String) {
         viewModelScope.launch {
             try {
-                val response = authRepository.registerUser(RegisterRequest(
-                    username = username,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    email = email,
-                    password = password))
+                val response = authRepository.registerUser(
+                    RegisterRequest(
+                        username = username,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        email = email,
+                        password = password
+                    )
+                )
                 if (response.isSuccessful) {
                     _authSuccess.value = true
                     _authError.value = null
