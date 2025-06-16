@@ -21,7 +21,15 @@ fun AuthNavGraph(
             LoginScreen(
                 authViewModel = authViewModel,
                 onLoginSuccess = {
-                    // Navigate as needed
+                    if (authViewModel.isAdmin.value) {
+                        navController.navigate(Graph.ADMIN) {
+                            popUpTo(Graph.AUTH) { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate(Graph.USER) {
+                            popUpTo(Graph.AUTH) { inclusive = true }
+                        }
+                    }
                 },
                 onNavigateToRegister = {
                     navController.navigate(Screen.Register.route)
