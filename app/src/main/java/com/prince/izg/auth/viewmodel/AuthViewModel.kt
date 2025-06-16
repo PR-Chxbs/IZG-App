@@ -82,16 +82,7 @@ class AuthViewModel(
         viewModelScope.launch {
             try {
                 val response = authRepository.registerUser(
-                    RegisterRequest(
-                        username = username,
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        email = email,
-                        password = password
-                    )
+                    RegisterRequest( username, email, password )
                 )
                 if (response.isSuccessful) {
                     _authSuccess.value = true
