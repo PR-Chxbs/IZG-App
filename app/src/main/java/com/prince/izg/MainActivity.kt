@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : ComponentActivity() {
 
     companion object {
-        private const val BASE_URL = "https://izg-backend.onrender.com" // Replace with actual base URL
+        private const val BASE_URL = "https://izg-backend.onrender.com/api/" // Replace with actual base URL
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

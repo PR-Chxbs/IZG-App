@@ -7,26 +7,26 @@ import retrofit2.http.*
 
 interface CategoryApi {
 
-    @GET("/categories")
+    @GET("categories")
     suspend fun getCategories(): Response<List<CategoryResponse>>
 
-    @GET("/categories/{id}")
+    @GET("categories/{id}")
     suspend fun getCategoryById(
         @Path("id") id: Int
     ): Response<CategoryResponse>
 
-    @POST("/categories")
+    @POST("categories")
     suspend fun addCategory(
         @Body request: CategoryRequest
     ): Response<CategoryResponse>
 
-    @PUT("/categories/{id}")
+    @PUT("categories/{id}")
     suspend fun updateCategory(
         @Path("id") id: Int,
         @Body request: CategoryRequest
     ): Response<CategoryResponse>
 
-    @DELETE("/categories/{id}")
+    @DELETE("categories/{id}")
     suspend fun deleteCategory(
         @Path("id") id: Int
     ): Response<Unit>

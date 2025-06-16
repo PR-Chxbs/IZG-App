@@ -7,31 +7,31 @@ import retrofit2.http.*
 
 interface UserApi {
 
-    @POST("/users")
+    @POST("users")
     suspend fun addUser(
         @Header("Authorization") token: String,
         @Body user: UserRequest
     ): Response<UserResponse>
 
-    @GET("/users")
+    @GET("users")
     suspend fun getUsers(
         @Header("Authorization") token: String
     ): Response<List<UserResponse>>
 
-    @GET("/users/{id}")
+    @GET("users/{id}")
     suspend fun getUserById(
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Response<UserResponse>
 
-    @PUT("/users/{id}")
+    @PUT("users/{id}")
     suspend fun updateUserById(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Body user: UserRequest
     ): Response<UserResponse>
 
-    @DELETE("/users/{id}")
+    @DELETE("users/{id}")
     suspend fun deleteUserById(
         @Header("Authorization") token: String,
         @Path("id") id: Int

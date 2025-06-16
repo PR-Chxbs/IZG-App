@@ -7,28 +7,28 @@ import retrofit2.http.*
 
 interface StockApi {
 
-    @POST("/stock")
+    @POST("stock")
     suspend fun addStock(
         @Header("Authorization") token: String,
         @Body stock: StockRequest
     ): Response<StockResponse>
 
-    @GET("/stock")
+    @GET("stock")
     suspend fun getStockItems(): Response<List<StockResponse>>
 
-    @GET("/stock/{id}")
+    @GET("stock/{id}")
     suspend fun getStockItemById(
         @Path("id") id: Int
     ): Response<StockResponse>
 
-    @PUT("/stock/{id}")
+    @PUT("stock/{id}")
     suspend fun updateStockItemById(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Body stock: StockRequest
     ): Response<StockResponse>
 
-    @DELETE("/stock/{id}")
+    @DELETE("stock/{id}")
     suspend fun deleteStockItemById(
         @Header("Authorization") token: String,
         @Path("id") id: Int
