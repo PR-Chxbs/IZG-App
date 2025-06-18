@@ -53,7 +53,7 @@ class AuthViewModel(
             if (parts.size != 3) return
             val payloadJson = String(Base64.decode(parts[1], Base64.URL_SAFE))
             val role = JSONObject(payloadJson).optString("role")
-            _isAdmin.value = role == "admin"
+            _isAdmin.value = role == "Admin"
         } catch (_: Exception) {
             _isAdmin.value = false
         }

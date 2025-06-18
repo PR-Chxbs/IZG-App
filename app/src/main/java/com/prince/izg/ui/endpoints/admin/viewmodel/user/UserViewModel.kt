@@ -1,5 +1,6 @@
 package com.prince.izg.ui.endpoints.admin.viewmodel.user
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prince.izg.data.remote.dto.User.UserRequest
@@ -31,6 +32,7 @@ class UserViewModel(
                 val response = userRepository.getUsers(token)
                 if (response.isSuccessful) {
                     val users = response.body() ?: emptyList()
+                    Log.d("UsersScreen", "Fetched users: ${users}")
                     _uiState.update { it.copy(users = users, isLoading = false) }
                 } else {
                     _uiState.update {

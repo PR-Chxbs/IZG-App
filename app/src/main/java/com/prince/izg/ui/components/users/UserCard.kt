@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.prince.izg.data.remote.dto.User.UserResponse
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import java.util.Objects.toString
 
 @Composable
 fun UserCard(
@@ -41,8 +43,10 @@ fun UserCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(6.dp)
+            .clickable { onClick() }
+            .border(1.dp, Color(0xFFE3E3E3)), // border added here
+        elevation = CardDefaults.cardElevation(0.dp), // no shadow
+        colors = CardDefaults.cardColors(containerColor = Color.White) // white background
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -80,9 +84,11 @@ fun UserCard(
 }
 
 @Composable
-fun LabelValue(label: String, value: String) {
+fun LabelValue(label: String, value: String?) {
+
+    val fixedVal: String = toString(value)
     Column {
         Text(label, fontSize = 12.sp, color = Color.Gray)
-        Text(value, fontWeight = FontWeight.Medium)
+        Text(fixedVal, fontWeight = FontWeight.Medium)
     }
 }
