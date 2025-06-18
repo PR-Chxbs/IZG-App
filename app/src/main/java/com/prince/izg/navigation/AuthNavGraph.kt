@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.prince.izg.auth.ui.LoginScreen
-import com.prince.izg.auth.ui.RegisterScreen
-import com.prince.izg.auth.viewmodel.AuthViewModel
+import com.prince.izg.ui.endpoints.auth.ui.LoginScreen
+import com.prince.izg.ui.endpoints.auth.ui.RegisterScreen
+import com.prince.izg.ui.endpoints.auth.viewmodel.AuthViewModel
 
 @Composable
 fun AuthNavGraph(

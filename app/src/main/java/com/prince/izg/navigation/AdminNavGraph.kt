@@ -6,8 +6,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 
+import com.prince.izg.ui.endpoints.admin.ui.DashboardScreen
+import com.prince.izg.ui.endpoints.admin.ui.EventsScreen
+import com.prince.izg.ui.endpoints.admin.ui.PostScreen
+import com.prince.izg.ui.endpoints.admin.ui.StockScreen
+import com.prince.izg.ui.endpoints.admin.ui.UsersScreen
+
 @Composable
-fun NavGraphBuilder.adminNavGraph(navController: NavController) {
+fun NavGraphBuilder.AdminNavGraph(navController: NavController) {
     navigation(
         startDestination = Screen.AdminDashboard.route,
         route = Graph.ADMIN

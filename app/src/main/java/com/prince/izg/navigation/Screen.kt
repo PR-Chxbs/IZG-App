@@ -17,7 +17,6 @@ sealed class Screen(val route: String) {
     object UserEvents : Screen("user_events")
     object UserPosts : Screen("user_posts")
 
-
     // Navs
     object Auth : Screen("auth")   // For NavHost startDestination
     object User : Screen("user")   // Root of user graph

@@ -7,6 +7,7 @@ data class UserResponse(
     val second_name: String,
     val gender: String,
     val dob: String,
+    val age: String?,
     val phone_number: String,
     val email: String,
     val role: String,

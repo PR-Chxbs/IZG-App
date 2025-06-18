@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
-import com.prince.izg.auth.viewmodel.AuthViewModel
-import com.prince.izg.auth.viewmodel.AuthViewModelFactory
+import com.prince.izg.ui.endpoints.auth.viewmodel.AuthViewModel
+import com.prince.izg.ui.endpoints.auth.viewmodel.AuthViewModelFactory
 import com.prince.izg.data.local.datastore.DataStoreManager
 import com.prince.izg.data.remote.api.AuthApi
 import com.prince.izg.data.repository.AuthRepository
