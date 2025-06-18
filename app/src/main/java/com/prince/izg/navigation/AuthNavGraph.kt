@@ -1,34 +1,29 @@
 package com.prince.izg.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.prince.izg.ui.endpoints.auth.ui.LoginScreen
 import com.prince.izg.ui.endpoints.auth.ui.RegisterScreen
 import com.prince.izg.ui.endpoints.auth.viewmodel.AuthViewModel
 
-@Composable
-fun AuthNavGraph(
-    navController: NavHostController,
-    authViewModel: AuthViewModel  // <-- Now passed as a parameter
+fun NavGraphBuilder.authNavGraph(
+    navController: NavController,
+    authViewModel: AuthViewModel
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Login.route
+    navigation(
+        startDestination = Screen.Login.route,
+        route = Graph.AUTH
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
                 authViewModel = authViewModel,
                 onLoginSuccess = {
-                    if (authViewModel.isAdmin.value) {
-                        navController.navigate(Graph.ADMIN) {
-                            popUpTo(Graph.AUTH) { inclusive = true }
-                        }
-                    } else {
-                        navController.navigate(Graph.USER) {
-                            popUpTo(Graph.AUTH) { inclusive = true }
-                        }
+                    val target = if (authViewModel.isAdmin.value) Graph.ADMIN else Graph.USER
+                    navController.navigate(target) {
+                        popUpTo(Graph.AUTH) { inclusive = true }
                     }
                 },
                 onNavigateToRegister = {

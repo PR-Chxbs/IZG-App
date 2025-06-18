@@ -14,6 +14,9 @@ import com.prince.izg.data.remote.dto.Auth.LoginRequest
 import com.prince.izg.data.remote.dto.Auth.RegisterRequest
 import com.prince.izg.data.repository.AuthRepository
 
+import android.util.Base64
+import org.json.JSONObject
+
 class AuthViewModel(
     private val authRepository: AuthRepository,
     private val dataStoreManager: DataStoreManager
@@ -28,6 +31,9 @@ class AuthViewModel(
     private val _authSuccess = MutableStateFlow(false)
     val authSuccess: StateFlow<Boolean> = _authSuccess
 
+    private val _isAdmin = MutableStateFlow(false)
+    val isAdmin: StateFlow<Boolean> = _isAdmin
+
     init {
         loadToken()
     }
@@ -36,7 +42,20 @@ class AuthViewModel(
         viewModelScope.launch {
             dataStoreManager.getAuthToken().collect { token ->
                 _authToken.value = token
+                updateRoleFromToken(token)
             }
+        }
+    }
+
+    private fun updateRoleFromToken(token: String?) {
+        try {
+            val parts = token?.split(".") ?: return
+            if (parts.size != 3) return
+            val payloadJson = String(Base64.decode(parts[1], Base64.URL_SAFE))
+            val role = JSONObject(payloadJson).optString("role")
+            _isAdmin.value = role == "admin"
+        } catch (_: Exception) {
+            _isAdmin.value = false
         }
     }
 

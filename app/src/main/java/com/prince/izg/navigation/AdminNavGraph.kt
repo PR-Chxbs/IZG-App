@@ -1,25 +1,32 @@
 package com.prince.izg.navigation
 
-import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.prince.izg.ui.endpoints.admin.ui.*
+import com.prince.izg.ui.endpoints.admin.viewmodel.user.UserViewModel
 
-import com.prince.izg.ui.endpoints.admin.ui.DashboardScreen
-import com.prince.izg.ui.endpoints.admin.ui.EventsScreen
-import com.prince.izg.ui.endpoints.admin.ui.PostScreen
-import com.prince.izg.ui.endpoints.admin.ui.StockScreen
-import com.prince.izg.ui.endpoints.admin.ui.UsersScreen
-
-@Composable
-fun NavGraphBuilder.AdminNavGraph(navController: NavController) {
+fun NavGraphBuilder.adminNavGraph(
+    navController: NavController,
+    userViewModel: UserViewModel,
+    token: String
+) {
     navigation(
         startDestination = Screen.AdminDashboard.route,
         route = Graph.ADMIN
     ) {
         composable(Screen.AdminDashboard.route) { DashboardScreen() }
-        composable(Screen.ManageUsers.route) { UsersScreen() }
+        composable(Screen.ManageUsers.route) {
+            UsersScreen(
+                viewModel = userViewModel,
+                token = token,
+                onEditUser = { userId ->
+                    // Navigate to EditUser screen (if you implement one later)
+                    // Example: navController.navigate("editUser/$userId")
+                }
+            )
+        }
         composable(Screen.ManageEvents.route) { EventsScreen() }
         composable(Screen.ManagePosts.route) { PostScreen() }
         composable(Screen.ManageStock.route) { StockScreen() }
