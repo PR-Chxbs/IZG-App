@@ -5,12 +5,16 @@ sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Register : Screen("register")
 
-    // Admin screens
+    // --------- Admin screens ---------
+    // Main
     object AdminDashboard : Screen("admin_dashboard")
     object ManageUsers : Screen("manage_users")
     object ManageEvents : Screen("manage_events")
     object ManagePosts : Screen("manage_posts")
     object ManageStock : Screen("manage_stock")
+
+    // User extra
+    object AddOrEditUser : Screen("editUser/{userId}")
 
     // User screens
     object UserHome : Screen("user_home")
@@ -21,4 +25,5 @@ sealed class Screen(val route: String) {
     object Auth : Screen("auth")   // For NavHost startDestination
     object User : Screen("user")   // Root of user graph
     object Admin : Screen("admin") // Root of admin graph
+
 }

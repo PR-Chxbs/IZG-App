@@ -25,21 +25,28 @@ class UserViewModel(
     private val _uiState = MutableStateFlow(UserUiState())
     val uiState: StateFlow<UserUiState> = _uiState
 
+    private val _isUserCreated = MutableStateFlow(false)
+    val isUserCreated: StateFlow<Boolean> = _isUserCreated
+
     fun getUsers(token: String) {
+        Log.d("UsersScreen", "(UserViewModel) Triggered getUsers")
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
                 val response = userRepository.getUsers(token)
+                Log.d("UsersScreen", "(UserViewModel) Response successful: ${response.isSuccessful}")
                 if (response.isSuccessful) {
                     val users = response.body() ?: emptyList()
-                    Log.d("UsersScreen", "Fetched users: ${users}")
+                    Log.d("UsersScreen", "(UserViewModel) Fetched users: $users")
                     _uiState.update { it.copy(users = users, isLoading = false) }
                 } else {
                     _uiState.update {
                         it.copy(error = response.message(), isLoading = false)
                     }
+
                 }
             } catch (e: Exception) {
+                Log.d("UsersScreen", "(From ViewModel) Exception: ${e.message}")
                 _uiState.update { it.copy(error = e.message, isLoading = false) }
             }
         }
@@ -64,19 +71,32 @@ class UserViewModel(
     }
 
     fun addUser(token: String, user: UserRequest) {
+        Log.d("AddOrEditUserScreen", "(UserViewModel) Add user triggered")
         viewModelScope.launch {
+            Log.d("AddOrEditUserScreen", "(UserViewModel) Entered view model scope")
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
                 val response = userRepository.addUser(token, user)
                 if (response.isSuccessful) {
+                    Log.d("AddOrEditUserScreen", "(UserViewModel) Add user successful")
                     getUsers(token) // refresh the list
+                    _isUserCreated.value = true
                 } else {
+                    val errorBody = response.errorBody()?.string()
+                    Log.d("AddOrEditUserScreen", "(UserViewModel) Error: $errorBody")
+
                     _uiState.update {
-                        it.copy(error = response.message(), isLoading = false)
+                        it.copy(
+                            error = errorBody ?: "Unknown error",
+                            isLoading = false
+                        )
                     }
+                    _isUserCreated.value = false
                 }
             } catch (e: Exception) {
+                Log.d("AddOrEditUserScreen", "Error: ${e.message}")
                 _uiState.update { it.copy(error = e.message, isLoading = false) }
+                _isUserCreated.value = false
             }
         }
     }
@@ -123,5 +143,8 @@ class UserViewModel(
 
     fun clearError() {
         _uiState.update { it.copy(error = null) }
+    }
+    fun resetUserCreatedFlag() {
+        _isUserCreated.value = false
     }
 }

@@ -7,6 +7,7 @@ import androidx.navigation.navigation
 import com.prince.izg.R
 import com.prince.izg.ui.components.shared.BottomNavBar
 import com.prince.izg.ui.components.shared.BottomNavItem
+import com.prince.izg.ui.components.users.AddOrEditUserScreen
 import com.prince.izg.ui.endpoints.admin.ui.*
 import com.prince.izg.ui.endpoints.admin.ui.dashboard.DashboardScreen
 import com.prince.izg.ui.endpoints.admin.viewmodel.category.CategoryViewModel
@@ -73,13 +74,36 @@ fun NavGraphBuilder.adminNavGraph(
                 viewModel = userViewModel,
                 token = token,
                 onEditUser = { userId ->
-                    // Navigate to EditUser screen (if you implement one later)
-                    // Example: navController.navigate("editUser/$userId")
+                    navController.navigate("editUser/${userId}")
+                },
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManageUsers.route
+                    )
                 }
             )
         }
         composable(Screen.ManageEvents.route) { EventsScreen() }
         composable(Screen.ManagePosts.route) { PostScreen() }
         composable(Screen.ManageStock.route) { StockScreen() }
+
+        composable("editUser/{userId}") { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId")?.toIntOrNull() ?: -1
+            AddOrEditUserScreen(
+                userId = userId,
+                token = token,
+                userViewModel = userViewModel,
+                onBack = { navController.popBackStack() },
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManageUsers.route
+                    )
+                }
+            )
+        }
     }
 }

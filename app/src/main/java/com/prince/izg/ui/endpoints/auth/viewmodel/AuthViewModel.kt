@@ -123,6 +123,10 @@ class AuthViewModel(
         }
     }
 
+    fun clearError() {
+        _authError.value = null
+    }
+
     fun logout() {
         viewModelScope.launch {
             dataStoreManager.clearAuthToken()

@@ -32,7 +32,8 @@ fun UsersScreen(
 
     LaunchedEffect(true) {
         viewModel.getUsers(token)
-        Log.d("UsersScreen", "Fetched users: ${uiState.users}")
+        Log.d("UsersScreen", "Token being passed: $token")
+        Log.d("UsersScreen", "(From screen) Fetched users: ${uiState.users}")
     }
 
     Scaffold(

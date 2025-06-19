@@ -70,4 +70,7 @@ dependencies {
 
     // Icons
     implementation(libs.material.icons.extended)
+
+    // Jcrypt
+    implementation(libs.jbcrypt)
 }

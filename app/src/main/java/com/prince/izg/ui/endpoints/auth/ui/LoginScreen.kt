@@ -57,7 +57,9 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { authViewModel.login(email, password) },
+            onClick = {
+                authViewModel.clearError()
+                authViewModel.login(email, password) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Login")

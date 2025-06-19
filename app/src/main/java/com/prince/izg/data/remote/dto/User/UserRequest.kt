@@ -9,5 +9,6 @@ data class UserRequest(
     val dob: String,
     val phone_number: String,
     val email: String,
+    val password: String = "Test",
     val role: String
 )

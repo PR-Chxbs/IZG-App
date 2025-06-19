@@ -27,6 +27,7 @@ fun NavGraphBuilder.authNavGraph(
                     }
                 },
                 onNavigateToRegister = {
+                    authViewModel.clearError()
                     navController.navigate(Screen.Register.route)
                 }
             )
@@ -36,6 +37,7 @@ fun NavGraphBuilder.authNavGraph(
             RegisterScreen(
                 authViewModel = authViewModel,
                 onNavigateToLogin = {
+                    authViewModel.clearError()
                     navController.popBackStack()
                 }
             )
