@@ -56,22 +56,6 @@ fun AddOrEditUserScreen(
     val uiState by userViewModel.uiState.collectAsState()
     val isUserCreated by userViewModel.isUserCreated.collectAsState()
 
-    // Fetch user if editing
-    LaunchedEffect(userId) {
-        if (userId != -1) {
-            userViewModel.getUserById(token, userId)
-        } else {
-            firstName =  ""
-            lastName = ""
-            username =  ""
-            email = ""
-            phoneNumber = ""
-            dob = ""
-            gender = ""
-            role = "Admin"
-        }
-    }
-
     // Populate fields when user is fetched
     LaunchedEffect(uiState.selectedUser) {
         uiState.selectedUser?.let { user ->

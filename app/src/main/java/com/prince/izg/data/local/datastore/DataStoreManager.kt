@@ -15,6 +15,7 @@ class DataStoreManager(
     private val context: Context
 ) {
 
+    // Auth token
     suspend fun saveAuthToken(token: String) {
         context.dataStore.edit { preferences ->
             preferences[DataStoreKeys.AUTH_TOKEN] = token
@@ -30,6 +31,19 @@ class DataStoreManager(
     suspend fun clearAuthToken() {
         context.dataStore.edit { preferences ->
             preferences.remove(DataStoreKeys.AUTH_TOKEN)
+        }
+    }
+
+    // User Id
+    suspend fun saveUserId(userId: String) {
+        context.dataStore.edit { preferences ->
+            preferences[DataStoreKeys.USER_ID] = userId
+        }
+    }
+
+    fun getUserId(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            preferences[DataStoreKeys.USER_ID]
         }
     }
 }

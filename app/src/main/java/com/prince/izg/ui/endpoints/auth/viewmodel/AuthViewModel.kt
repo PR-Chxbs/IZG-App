@@ -15,6 +15,8 @@ import com.prince.izg.data.remote.dto.Auth.RegisterRequest
 import com.prince.izg.data.repository.AuthRepository
 
 import android.util.Base64
+import com.prince.izg.data.remote.dto.User.UserResponse
+import com.prince.izg.data.repository.UserRepository
 import org.json.JSONObject
 
 class AuthViewModel(
@@ -42,18 +44,29 @@ class AuthViewModel(
         viewModelScope.launch {
             dataStoreManager.getAuthToken().collect { token ->
                 _authToken.value = token
-                updateRoleFromToken(token)
+                decodeTokenData(token)
             }
         }
     }
 
-    private fun updateRoleFromToken(token: String?) {
+    private fun decodeTokenData(token: String?) {
         try {
             val parts = token?.split(".") ?: return
             if (parts.size != 3) return
+
             val payloadJson = String(Base64.decode(parts[1], Base64.URL_SAFE))
-            val role = JSONObject(payloadJson).optString("role")
+            val json = JSONObject(payloadJson)
+
+            val role = json.optString("role")
+            val userId = json.optInt("userId", -1)
+
             _isAdmin.value = role == "Admin"
+
+            if (userId != -1) {
+                viewModelScope.launch {
+                    dataStoreManager.saveUserId(userId.toString())
+                }
+            }
         } catch (_: Exception) {
             _isAdmin.value = false
         }

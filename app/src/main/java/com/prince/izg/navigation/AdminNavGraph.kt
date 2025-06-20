@@ -5,6 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.prince.izg.R
+import com.prince.izg.ui.components.post.CreateArticleScreen
+import com.prince.izg.ui.components.post.ReadArticleScreen
 import com.prince.izg.ui.components.shared.BottomNavBar
 import com.prince.izg.ui.components.shared.BottomNavItem
 import com.prince.izg.ui.components.users.AddOrEditUserScreen
@@ -86,10 +88,25 @@ fun NavGraphBuilder.adminNavGraph(
             )
         }
         composable(Screen.ManageEvents.route) { EventsScreen() }
-        composable(Screen.ManagePosts.route) { PostScreen() }
+
+        composable(Screen.ManagePosts.route) {
+            PostScreen(
+                viewModel = postViewModel,
+                token = token,
+                navController = navController,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManagePosts.route
+                    )
+                }
+            )
+        }
+
         composable(Screen.ManageStock.route) { StockScreen() }
 
-        composable("editUser/{userId}") { backStackEntry ->
+        composable(Screen.AddOrEditUser.route) { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId")?.toIntOrNull() ?: -1
             AddOrEditUserScreen(
                 userId = userId,
@@ -105,5 +122,40 @@ fun NavGraphBuilder.adminNavGraph(
                 }
             )
         }
+
+        composable(Screen.CreatePost.route) { backStackEntry ->
+            val postId = backStackEntry.arguments?.getString("postId")?.toIntOrNull() ?: -1
+            CreateArticleScreen(
+                navController = navController,
+                token = token,
+                viewModel = postViewModel,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManagePosts.route
+                    )
+                },
+                postId = postId
+            )
+        }
+
+        composable(Screen.ReadPost.route) { backStackEntry ->
+            val postId = backStackEntry.arguments?.getString("postId")?.toIntOrNull() ?: -1
+            ReadArticleScreen(
+                navController = navController,
+                postId = postId,
+                viewModel = postViewModel,
+                token = token,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManagePosts.route
+                    )
+                }
+            )
+        }
+
     }
 }
