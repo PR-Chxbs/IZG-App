@@ -74,7 +74,13 @@ fun RootNavGraph(
         }
     ) {
         authNavGraph(navController, authViewModel)
-        userNavGraph(navController)
+        userNavGraph(
+            navController = navController,
+            postViewModel = postViewModel,
+            eventViewModel = eventViewModel,
+            token = token.orEmpty()
+            )
+
         adminNavGraph(
             navController = navController,
             userViewModel = userViewModel,

@@ -14,7 +14,6 @@ fun DashboardScreen(
     navController: NavController,
     bottomBar: @Composable () -> Unit
 ) {
-    val currentRoute = remember { Screen.AdminDashboard.route }
 
     Scaffold(
         topBar = {
