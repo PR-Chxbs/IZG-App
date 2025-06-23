@@ -1,5 +1,6 @@
 package com.prince.izg.ui.endpoints.admin.viewmodel.stock
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prince.izg.data.remote.dto.Stock.StockRequest
@@ -57,17 +58,22 @@ class StockViewModel(
     }
 
     fun addStock(token: String, stock: StockRequest) {
+        Log.d("StockScreen", "(StockViewModel) Triggered addStock()")
+        Log.d("StockScreen","(StockViewModel) Request body: $stock")
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
                 val response = stockRepository.addStock(token, stock)
                 if (response.isSuccessful) {
                     getAllStock(token)
+                    Log.d("StockScreen", "(StockViewModel) Stock successfully added")
                 } else {
                     _uiState.update { it.copy(error = response.message(), isLoading = false) }
+                    Log.d("StockScreen", "(StockViewModel) Error (else): ${response.message()}")
                 }
             } catch (e: Exception) {
                 _uiState.update { it.copy(error = e.message, isLoading = false) }
+                Log.d("StockScreen", "(StockViewModel) Error (exception): ${e.message}")
             }
         }
     }

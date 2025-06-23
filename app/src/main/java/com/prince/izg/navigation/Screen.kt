@@ -20,6 +20,9 @@ sealed class Screen(val route: String) {
     object CreatePost : Screen("createPost/{postId}")
     object ReadPost : Screen("readArticle/{postId}")
 
+    // Stock extra
+    object AddOrEditStock : Screen("addOrEditStock/{stockId}")
+
     // User screens
     object UserHome : Screen("user_home")
     object UserEvents : Screen("user_events")

@@ -9,6 +9,7 @@ import com.prince.izg.ui.components.post.CreateArticleScreen
 import com.prince.izg.ui.components.post.ReadArticleScreen
 import com.prince.izg.ui.components.shared.BottomNavBar
 import com.prince.izg.ui.components.shared.BottomNavItem
+import com.prince.izg.ui.components.stock.AddOrEditStockScreen
 import com.prince.izg.ui.components.users.AddOrEditUserScreen
 import com.prince.izg.ui.endpoints.admin.ui.*
 import com.prince.izg.ui.endpoints.admin.ui.dashboard.DashboardScreen
@@ -35,30 +36,32 @@ fun NavGraphBuilder.adminNavGraph(
             BottomNavItem(
                 route = Screen.AdminDashboard.route,
                 label = "Home",
-                iconRes = R.drawable.ic_dashboard
+                // iconRes = R.drawable.ic_dashboard
+                iconRes = R.drawable.ic_home_icon
             ),
             BottomNavItem(
                 route = Screen.ManageUsers.route,
                 label = "Team",
-                iconRes = R.drawable.ic_users
+                iconRes = R.drawable.ic_user_icon
             ),
             BottomNavItem(
                 route = Screen.ManageStock.route,
                 label = "Stock",
-                iconRes = R.drawable.ic_post
+                iconRes = R.drawable.ic_stock_icon
             ),
             BottomNavItem(
                 route = Screen.ManagePosts.route,
                 label = "Articles",
-                iconRes = R.drawable.ic_post
+                iconRes = R.drawable.ic_article_icon
             ),
             BottomNavItem(
                 route = Screen.ManageEvents.route,
                 label = "Events",
-                iconRes = R.drawable.ic_post
+                iconRes = R.drawable.ic_event_icon
             )
 
         )
+
         composable(Screen.AdminDashboard.route) {
             DashboardScreen(
                 navController = navController,
@@ -104,7 +107,24 @@ fun NavGraphBuilder.adminNavGraph(
             )
         }
 
-        composable(Screen.ManageStock.route) { StockScreen() }
+        composable(Screen.ManageStock.route) { backStackEntry ->
+            val postId = backStackEntry.arguments?.getString("postId")?.toIntOrNull() ?: -1
+            StockScreen(
+                viewModel = stockViewModel,
+                token = token,
+                navToAddOrEditStock = { stockId ->
+                    val route = stockId?.let { "addOrEditStock/$it" } ?: "addOrEditStock"
+                    navController.navigate(route)
+                },
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManageStock.route
+                    )
+                }
+            )
+        }
 
         composable(Screen.AddOrEditUser.route) { backStackEntry ->
             val userId = backStackEntry.arguments?.getString("userId")?.toIntOrNull() ?: -1
@@ -152,6 +172,24 @@ fun NavGraphBuilder.adminNavGraph(
                         items = bottomNavItems,
                         navController = navController,
                         currentRoute = Screen.ManagePosts.route
+                    )
+                }
+            )
+        }
+
+        composable(Screen.AddOrEditStock.route) { backStackEntry ->
+            val stockId = backStackEntry.arguments?.getString("stockId")?.toIntOrNull() ?: -1
+            AddOrEditStockScreen(
+                stockId = stockId,
+                token = token,
+                stockViewModel = stockViewModel,
+                onBack = { navController.popBackStack() },
+                navController = navController,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManageStock.route
                     )
                 }
             )

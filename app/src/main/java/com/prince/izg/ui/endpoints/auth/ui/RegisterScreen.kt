@@ -1,11 +1,15 @@
 package com.prince.izg.ui.endpoints.auth.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.prince.izg.R
 import com.prince.izg.ui.endpoints.auth.viewmodel.AuthViewModel
 
 @Composable
@@ -34,6 +38,22 @@ fun RegisterScreen(
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_izg_logo),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .width(150.dp),
+            )
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         Text("Register", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
 
