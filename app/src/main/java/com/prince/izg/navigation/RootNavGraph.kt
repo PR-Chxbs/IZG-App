@@ -1,6 +1,7 @@
 package com.prince.izg.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
@@ -34,7 +35,20 @@ fun RootNavGraph(
     val context = LocalContext.current
     val token by authViewModel.authToken.collectAsState()
     val isAdmin by authViewModel.isAdmin.collectAsState()
-    val isLoggedIn = !token.isNullOrEmpty()
+
+    // === EXPIRATION CHECK ===
+    val tokenExpired = remember(token) {
+        token?.let { isJwtExpired(it) } ?: true
+    }
+
+    // If token is expired, clear it
+    LaunchedEffect(tokenExpired) {
+        if (tokenExpired) {
+            authViewModel.logout()
+        }
+    }
+
+    val isLoggedIn = !token.isNullOrEmpty() && !tokenExpired
 
     // --- API Instances ---
     val userApi = retrofit.create(UserApi::class.java)

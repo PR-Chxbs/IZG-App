@@ -59,7 +59,6 @@ fun NavGraphBuilder.adminNavGraph(
                 label = "Events",
                 iconRes = R.drawable.ic_event_icon
             )
-
         )
 
         composable(Screen.AdminDashboard.route) {
