@@ -73,4 +73,8 @@ dependencies {
 
     // Jcrypt
     implementation(libs.jbcrypt)
+
+    // Coil
+    implementation(libs.coil.core)     // Core Coil dependency
+    implementation(libs.coil.compose)
 }

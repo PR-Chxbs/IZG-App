@@ -89,7 +89,19 @@ fun NavGraphBuilder.adminNavGraph(
                 }
             )
         }
-        composable(Screen.ManageEvents.route) { EventsScreen() }
+        composable(Screen.ManageEvents.route) {
+            EventsScreen(
+                viewModel = eventViewModel,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.ManageEvents.route
+                    )
+                },
+                token = token
+            )
+        }
 
         composable(Screen.ManagePosts.route) {
             PostScreen(

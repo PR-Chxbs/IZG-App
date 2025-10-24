@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.prince.izg.data.remote.dto.User.UserRequest
 import com.prince.izg.data.remote.dto.User.UserResponse
 import com.prince.izg.data.repository.UserRepository
+import com.prince.izg.utils.calculateAge
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -34,9 +35,17 @@ class UserViewModel(
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
                 val response = userRepository.getUsers(token)
-                Log.d("UsersScreen", "(UserViewModel) Response successful: ${response.isSuccessful}")
+                // Log.d("UsersScreen", "(UserViewModel) Response successful: ${response.isSuccessful}")
                 if (response.isSuccessful) {
-                    val users = response.body() ?: emptyList()
+                    Log.d("UsersScreen", "(UserViewModel) Response successful")
+                    var users = response.body() ?: emptyList()
+                    if (users.isNotEmpty()) {
+                        users = users.map { user ->
+                            val age = calculateAge(user.dob)
+                            user.copy(age = age.toString(), created_at = user.created_at.take(10)) // create a new User with the age filled in
+
+                        }
+                    }
                     Log.d("UsersScreen", "(UserViewModel) Fetched users: $users")
                     _uiState.update { it.copy(users = users, isLoading = false) }
                 } else {
@@ -58,7 +67,10 @@ class UserViewModel(
             try {
                 val response = userRepository.getUserById(token, id)
                 if (response.isSuccessful) {
-                    _uiState.update { it.copy(selectedUser = response.body(), isLoading = false) }
+                    var tempUser = response.body()
+                    tempUser = tempUser?.copy(age = calculateAge(tempUser.dob).toString(), created_at = tempUser.created_at.take(10))
+
+                    _uiState.update { it.copy(selectedUser = tempUser, isLoading = false) }
                 } else {
                     _uiState.update {
                         it.copy(error = response.message(), isLoading = false)

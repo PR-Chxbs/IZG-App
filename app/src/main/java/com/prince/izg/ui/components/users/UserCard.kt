@@ -65,7 +65,7 @@ fun UserCard(
                 Text(user.username, fontWeight = FontWeight.Bold, fontSize = 18.sp)
 
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    LabelValue(label = "Age", value = "${user.age}")
+                    LabelValue(label = "Age", value = "${(user.age)}")
                     LabelValue(label = "Gender", value = user.gender)
                     LabelValue(label = "Joined", value = user.created_at)
                     LabelValue(label = "Role", value = user.role)

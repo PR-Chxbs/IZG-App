@@ -44,39 +44,46 @@ fun NavGraphBuilder.userNavGraph(
 
         )
 
-        composable(Screen.UserHome.route) { HomeScreen(
-            navController = navController,
-            bottomBar = {
-                BottomNavBar(
-                    items = bottomNavItems,
-                    navController = navController,
-                    currentRoute = Screen.UserHome.route
-                )
-            }
-        ) }
+        composable(Screen.UserHome.route) {
+            HomeScreen(
+                navController = navController,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.UserHome.route
+                    )
+                }
+            )
+        }
 
-        composable(Screen.UserPosts.route) { PostsScreen(
-            viewModel = postViewModel,
-            token = token,
-            navController = navController,
-            bottomBar = {
-                BottomNavBar(
-                    items = bottomNavItems,
-                    navController = navController,
-                    currentRoute = Screen.UserPosts.route
-                )
-            }
-        ) }
-        composable(Screen.UserEvents.route) { EventsScreen(
-            navController = navController,
-            bottomBar = {
-                BottomNavBar(
-                    items = bottomNavItems,
-                    navController = navController,
-                    currentRoute = Screen.UserEvents.route
-                )
-            }
-        ) }
+        composable(Screen.UserPosts.route) {
+            PostsScreen(
+                viewModel = postViewModel,
+                token = token,
+                navController = navController,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.UserPosts.route
+                    )
+                }
+            )
+        }
+
+        composable(Screen.UserEvents.route) {
+            EventsScreen(
+                navController = navController,
+                bottomBar = {
+                    BottomNavBar(
+                        items = bottomNavItems,
+                        navController = navController,
+                        currentRoute = Screen.UserEvents.route
+                    )
+                }
+            )
+        }
 
         composable(Screen.UserReadPost.route) { backStackEntry ->
             val postId = backStackEntry.arguments?.getString("postId")?.toIntOrNull() ?: -1
