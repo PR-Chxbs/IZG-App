@@ -35,7 +35,10 @@ import java.time.format.DateTimeFormatter
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun EventCard(event: EventResponse) {
+fun EventCard(
+    event: EventResponse,
+    onClick: () -> Unit
+) {
     val formattedDate = remember(event.event_date) {
         try {
             val inputFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
@@ -51,12 +54,11 @@ fun EventCard(event: EventResponse) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .clickable { /* TODO: Navigate to event details */ },
+            .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column {
-            // Image Section
             if (!event.image_url.isNullOrEmpty()) {
                 Image(
                     painter = rememberAsyncImagePainter(event.image_url),
@@ -69,7 +71,6 @@ fun EventCard(event: EventResponse) {
                 )
             }
 
-            // Info Section
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
                     text = event.name,
@@ -122,3 +123,4 @@ fun EventCard(event: EventResponse) {
         }
     }
 }
+
