@@ -74,7 +74,8 @@ fun NavGraphBuilder.userNavGraph(
 
         composable(Screen.UserEvents.route) {
             EventsScreen(
-                navController = navController,
+                viewModel = eventViewModel,
+                token = token,
                 bottomBar = {
                     BottomNavBar(
                         items = bottomNavItems,
