@@ -69,13 +69,7 @@ fun PostsScreen(
         }
     }
 
-    LaunchedEffect(uiState.posts) {
-        uiState.posts.forEach { post ->
-            if (!uiState.authorNames.containsKey(post.author_id)) {
-                viewModel.fetchAuthorName(token, post.author_id)
-            }
-        }
-    }
+
 
     Scaffold(
         topBar = {
@@ -105,8 +99,7 @@ fun PostsScreen(
                 items(uiState.posts) { post ->
                     ArticleCard(
                         post = post,
-                        navController = navController,
-                        viewModel = viewModel
+                        navController = navController
                     )
                 }
             }
@@ -117,12 +110,11 @@ fun PostsScreen(
 @Composable
 fun ArticleCard(
     post: PostResponse,
-    navController: NavController,
-    viewModel: PostViewModel
+    navController: NavController
 ) {
 
 
-    val authorName = viewModel.uiState.collectAsState().value.authorNames[post.author_id] ?: "Anonymous"
+    val authorName = post.first_name ?: "Anonymous"
 
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),

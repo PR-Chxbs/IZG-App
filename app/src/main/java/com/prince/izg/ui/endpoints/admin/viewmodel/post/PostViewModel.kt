@@ -19,12 +19,10 @@ data class PostUiState(
     val selectedPost: PostResponse? = null,
     val isLoading: Boolean = false,
     val error: String? = null,
-    val authorNames: Map<Int, String> = emptyMap()
 )
 
 class PostViewModel(
-    private val postRepository: PostRepository,
-    private val userRepository: UserRepository
+    private val postRepository: PostRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PostUiState())
@@ -133,21 +131,6 @@ class PostViewModel(
             }
         }
     }
-
-    fun fetchAuthorName(token: String, userId: Int) {
-        viewModelScope.launch {
-            try {
-                val response = userRepository.getUserById(token, userId)
-                if (response.isSuccessful) {
-                    val name = response.body()?.first_name ?: "Anonymous"
-                    _uiState.update { it.copy(authorNames = it.authorNames + (userId to name)) }
-                }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(error = e.message) }
-            }
-        }
-    }
-
 
     fun clearSelectedPost() {
         _uiState.update { it.copy(selectedPost = null) }

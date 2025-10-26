@@ -64,14 +64,6 @@ fun PostScreen(
         }
     }
 
-    LaunchedEffect(uiState.posts) {
-        uiState.posts.forEach { post ->
-            if (!uiState.authorNames.containsKey(post.author_id)) {
-                viewModel.fetchAuthorName(token, post.author_id)
-            }
-        }
-    }
-
     Scaffold(
         topBar = {
             TopAppBar(title = { Text("Post") })
@@ -111,7 +103,6 @@ fun PostScreen(
                         onDelete = { postId -> viewModel.deletePost(token, postId) },
                         onEdit = { postId -> navController.navigate("createPost/$postId") },
                         navController = navController,
-                        viewModel = viewModel,
                         token = token
                     )
                 }
@@ -126,7 +117,6 @@ fun ArticleCard(
     onDelete: (Int) -> Unit,
     onEdit: (Int) -> Unit, // for future use
     navController: NavController,
-    viewModel: PostViewModel,
     token: String
 ) {
     var showDialog by remember { mutableStateOf(false) }
@@ -143,7 +133,7 @@ fun ArticleCard(
         )
     }
 
-    val authorName = viewModel.uiState.collectAsState().value.authorNames[post.author_id] ?: "Anonymous"
+    val authorName = post.first_name ?: "Anonymous"
 
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),

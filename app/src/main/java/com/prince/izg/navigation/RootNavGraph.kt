@@ -68,7 +68,7 @@ fun RootNavGraph(
     val userViewModelFactory = remember { UserViewModelFactory(userRepo) }
     val categoryViewModelFactory = remember { CategoryViewModelFactory(categoryRepo) }
     val eventViewModelFactory = remember { EventViewModelFactory(eventRepo) }
-    val postViewModelFactory = remember { PostViewModelFactory(postRepo, userRepo) }
+    val postViewModelFactory = remember { PostViewModelFactory(postRepo) }
     val stockViewModelFactory = remember { StockViewModelFactory(stockRepo) }
 
     // --- ViewModels via ViewModelProvider ---
