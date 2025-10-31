@@ -29,16 +29,16 @@ fun NavGraphBuilder.adminNavGraph(
     token: String
 ) {
     navigation(
-        startDestination = Screen.AdminDashboard.route,
+        startDestination = Screen.ManageUsers.route,
         route = Graph.ADMIN
     ) {
         val bottomNavItems = listOf(
-            BottomNavItem(
+            /*BottomNavItem(
                 route = Screen.AdminDashboard.route,
                 label = "Home",
                 // iconRes = R.drawable.ic_dashboard
                 iconRes = R.drawable.ic_home_icon
-            ),
+            ),*/
             BottomNavItem(
                 route = Screen.ManageUsers.route,
                 label = "Team",

@@ -20,17 +20,17 @@ fun NavGraphBuilder.userNavGraph(
     token: String
 ) {
     navigation(
-        startDestination = Screen.UserHome.route,
+        startDestination = Screen.UserPosts.route,
         route = Graph.USER
     ) {
 
         val bottomNavItems = listOf(
-            BottomNavItem(
+            /*BottomNavItem(
                 route = Screen.UserHome.route,
                 label = "Home",
                 // iconRes = R.drawable.ic_dashboard
                 iconRes = R.drawable.ic_home_icon
-            ),
+            ),*/
             BottomNavItem(
                 route = Screen.UserPosts.route,
                 label = "Articles",
