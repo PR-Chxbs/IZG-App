@@ -1,28 +1,19 @@
 package com.prince.izg.ui.components.post
 
 import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.prince.izg.data.remote.dto.Post.PostRequest
-import com.prince.izg.ui.components.shared.BottomNavBar
-import com.prince.izg.ui.components.shared.BottomNavItem
 import com.prince.izg.ui.endpoints.admin.viewmodel.post.PostViewModel
+import android.util.Base64
+import org.json.JSONObject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -195,4 +186,22 @@ fun slugify(input: String): String {
         .trim()                      // Remove leading/trailing spaces
         .lowercase()                 // Convert to lowercase
         .replace(Regex("\\s+"), "-") // Replace 1+ spaces with a single "-"
+}
+
+fun getUserIdFromJwt(token: String): Int? {
+    return try {
+        // JWT format: header.payload.signature
+        val parts = token.split(".")
+        if (parts.size < 2) return null
+
+        // Decode the payload (second part)
+        val payloadJson = String(Base64.decode(parts[1], Base64.URL_SAFE or Base64.NO_PADDING or Base64.NO_WRAP))
+
+        // Convert to JSONObject and extract "user_id"
+        val jsonObject = JSONObject(payloadJson)
+        jsonObject.optInt("user_id") // returns 0 if missing
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
 }

@@ -71,7 +71,7 @@ fun UserEventDetailsSheet(event: EventResponse) {
                 modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(6.dp))
-            Text("$formattedDate • ${event.start_time} - ${event.end_time}")
+            Text("${formattedDate.take(10)} • ${event.start_time} - ${event.end_time}")
         }
 
         Spacer(modifier = Modifier.height(6.dp))

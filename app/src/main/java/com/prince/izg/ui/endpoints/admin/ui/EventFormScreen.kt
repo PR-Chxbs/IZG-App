@@ -1,5 +1,6 @@
 package com.prince.izg.ui.endpoints.admin.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.LaunchedEffect
 import com.prince.izg.data.remote.dto.Event.EventRequest
 import com.prince.izg.data.remote.dto.Event.EventResponse
 import com.prince.izg.ui.endpoints.admin.viewmodel.event.EventViewModel
@@ -36,25 +38,34 @@ fun EventFormScreen(
     eventId: Int,
     onFinish: () -> Unit
 ) {
-
-
     val uiState by viewModel.uiState.collectAsState()
-    var event: EventResponse? = EventResponse(0, 0, "", "", "", "", "", "", "","");
-
-    val isEdit = eventId == -1
+    val isEdit = eventId != -1
 
     if (isEdit) {
-        viewModel.getEventById(token, eventId)
-        event = uiState.selectedEvent
+        LaunchedEffect(eventId) {
+            viewModel.getEventById(token, eventId)
+        }
     }
 
-    var name by remember { mutableStateOf(event?.name ?: "") }
-    var description by remember { mutableStateOf(event?.description ?: "") }
-    var location by remember { mutableStateOf(event?.location ?: "") }
-    var date by remember { mutableStateOf(event?.event_date ?: "") }
-    var startTime by remember { mutableStateOf(event?.start_time ?: "") }
-    var endTime by remember { mutableStateOf(event?.end_time ?: "") }
-    var imageUrl by remember { mutableStateOf(event?.image_url ?: "") }
+    var name by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var location by remember { mutableStateOf("") }
+    var date by remember { mutableStateOf("") }
+    var startTime by remember { mutableStateOf("") }
+    var endTime by remember { mutableStateOf("") }
+    var imageUrl by remember { mutableStateOf("") }
+
+    LaunchedEffect(uiState.selectedEvent) {
+        uiState.selectedEvent?.let { e ->
+            name = e.name
+            description = e.description
+            location = e.location
+            date = e.event_date.take(10)
+            startTime = e.start_time
+            endTime = e.end_time
+            imageUrl = e.image_url ?: ""
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -137,7 +148,7 @@ fun EventFormScreen(
                     )
 
                     if (isEdit) {
-                        viewModel.updateEvent(token, event!!.id, eventRequest)
+                        viewModel.updateEvent(token, eventId, eventRequest)
                     } else {
                         viewModel.addEvent(token, eventRequest)
                     }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.Button
@@ -59,10 +60,10 @@ fun EventsScreen(
     Scaffold(
         bottomBar = bottomBar,
         floatingActionButton = {
-            FloatingActionButton(onClick = { viewModel.getEvents(token) }) {
+            FloatingActionButton(onClick = { navController.navigate(Screen.AddOrEditEvent.route) }) {
                 Icon(
-                    imageVector = Icons.Default.Refresh,
-                    contentDescription = "Refresh Events"
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add New Event"
                 )
             }
         }
