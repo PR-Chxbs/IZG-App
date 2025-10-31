@@ -121,6 +121,20 @@ fun ArticleCard(
     token: String
 ) {
 
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        TempConfirmDeleteDialog (
+            title = "Delete Article",
+            message = "Are you sure you want to delete '${post.title}'? This action cannot be undone.",
+            onConfirm = {
+                onDelete(post.id)
+                showDialog = false
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+
     val authorName = post.first_name ?: "Anonymous"
 
     Card(
@@ -185,6 +199,18 @@ fun ArticleCard(
             )
 
             Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TextButton(onClick = { onEdit(post.id) }) {
+                    Text("Edit")
+                }
+                TextButton(onClick =  { showDialog = true }) {
+                    Text("Delete")
+                }
+            }
         }
     }
 }
