@@ -68,7 +68,7 @@ fun EventCard(
             }
 
             Image(
-                painter = rememberAsyncImagePainter(event.image_url),
+                painter = rememberAsyncImagePainter(eventCoverImage),
                 contentDescription = event.name,
                 modifier = Modifier
                     .fillMaxWidth()

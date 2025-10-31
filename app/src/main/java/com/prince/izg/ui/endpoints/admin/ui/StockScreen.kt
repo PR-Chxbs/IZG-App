@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 
 import com.prince.izg.ui.components.shared.BottomNavBar
 import com.prince.izg.ui.components.shared.BottomNavItem
@@ -70,6 +71,14 @@ fun StockScreen(
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize().padding(8.dp)) {
                     items(uiState.stockItems) { item ->
+                        var stockCoverImage: String
+
+                        if (item.image.isNullOrEmpty()) {
+                            stockCoverImage = "https://www.sosproducts.com/v/vspfiles/photos/350237-2.jpg?v-cache=1733143537"
+                        } else {
+                            stockCoverImage = item.image
+                        }
+
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -84,7 +93,7 @@ fun StockScreen(
                             ) {
                                 item.image?.let { imageUrl ->
                                     Image(
-                                        painter = painterResource(id = R.drawable.article_placeholder_image),
+                                        painter = rememberAsyncImagePainter(stockCoverImage),
                                         contentDescription = item.name,
                                         modifier = Modifier
                                             .size(60.dp)
