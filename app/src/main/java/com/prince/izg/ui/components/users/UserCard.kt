@@ -46,18 +46,18 @@ fun UserCard(
             .clickable { onClick() }
             .border(1.dp, Color(0xFFE3E3E3)), // border added here
         elevation = CardDefaults.cardElevation(0.dp), // no shadow
-        colors = CardDefaults.cardColors(containerColor = Color.White) // white background
+        // colors = CardDefaults.cardColors(containerColor = Color.White) // white background
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Placeholder image
-            Box(
+            /*Box(
                 modifier = Modifier
                     .size(60.dp)
                     .background(Color.Gray, shape = CircleShape)
-            )
+            )*/
 
             Spacer(modifier = Modifier.width(16.dp))
 

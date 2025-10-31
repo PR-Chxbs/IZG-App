@@ -29,16 +29,16 @@ fun NavGraphBuilder.adminNavGraph(
     token: String
 ) {
     navigation(
-        startDestination = Screen.AdminDashboard.route,
+        startDestination = Screen.ManageUsers.route,
         route = Graph.ADMIN
     ) {
         val bottomNavItems = listOf(
-            BottomNavItem(
+            /*BottomNavItem(
                 route = Screen.AdminDashboard.route,
                 label = "Home",
                 // iconRes = R.drawable.ic_dashboard
                 iconRes = R.drawable.ic_home_icon
-            ),
+            ),*/
             BottomNavItem(
                 route = Screen.ManageUsers.route,
                 label = "Team",
@@ -99,7 +99,8 @@ fun NavGraphBuilder.adminNavGraph(
                         currentRoute = Screen.ManageEvents.route
                     )
                 },
-                token = token
+                token = token,
+                navController = navController
             )
         }
 
@@ -203,6 +204,16 @@ fun NavGraphBuilder.adminNavGraph(
                         currentRoute = Screen.ManageStock.route
                     )
                 }
+            )
+        }
+
+        composable(Screen.AddOrEditEvent.route) { backStackEntry ->
+            val eventId = backStackEntry.arguments?.getString("eventId")?.toIntOrNull() ?: -1
+            EventFormScreen(
+                viewModel = eventViewModel,
+                token = token,
+                eventId = eventId,
+                onFinish = { navController.navigate(Screen.ManageEvents.route)}
             )
         }
 

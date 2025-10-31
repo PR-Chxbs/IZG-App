@@ -34,6 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.prince.izg.navigation.Screen
 import com.prince.izg.ui.components.event.EventCard
 import com.prince.izg.ui.components.event.EventDetailsSheet
 import com.prince.izg.ui.endpoints.admin.viewmodel.event.EventViewModel
@@ -43,7 +45,8 @@ import com.prince.izg.ui.endpoints.admin.viewmodel.event.EventViewModel
 fun EventsScreen(
     viewModel: EventViewModel,
     token: String,
-    bottomBar: @Composable () -> Unit
+    bottomBar: @Composable () -> Unit,
+    navController: NavController
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -140,7 +143,15 @@ fun EventsScreen(
                     sheetState = sheetState,
                     dragHandle = { BottomSheetDefaults.DragHandle() }
                 ) {
-                    EventDetailsSheet(event = uiState.selectedEvent!!)
+                    EventDetailsSheet(
+                        event = uiState.selectedEvent!!,
+                        viewModel = viewModel,
+                        token = token,
+                        onClose = {
+                            viewModel.clearSelectedEvent()
+                        },
+                        onNavigate = { eventId -> navController.navigate(Screen.AddOrEditEvent.route.replace("{eventId}", "$eventId"))}
+                    )
                 }
             }
         }
