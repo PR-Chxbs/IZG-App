@@ -89,6 +89,7 @@ fun CreateArticleScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            /*
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -102,7 +103,7 @@ fun CreateArticleScreen(
                     tint = Color.DarkGray,
                     modifier = Modifier.size(48.dp)
                 )
-            }
+            }*/
 
             OutlinedTextField(
                 value = title,
@@ -187,4 +188,11 @@ fun CreateArticleScreen(
             viewModel.resetPostCreatedFlag()
         }
     }
+}
+
+fun slugify(input: String): String {
+    return input
+        .trim()                      // Remove leading/trailing spaces
+        .lowercase()                 // Convert to lowercase
+        .replace(Regex("\\s+"), "-") // Replace 1+ spaces with a single "-"
 }

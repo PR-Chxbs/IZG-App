@@ -11,10 +11,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.prince.izg.R
 import com.prince.izg.ui.components.shared.BottomNavBar
 import com.prince.izg.ui.endpoints.admin.viewmodel.post.PostViewModel
@@ -68,12 +70,21 @@ fun ReadArticleScreen(
                     .padding(padding)
                     .verticalScroll(rememberScrollState())
             ) {
+                var postCoverImage: String
+
+                if (post.cover_image.isNullOrEmpty()) {
+                    postCoverImage = "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?_gl=1*1it0i05*_ga*MTI1ODAzMjQ2Ny4xNzYxODkzMTAx*_ga_8JE65Q40S6*czE3NjE4OTMxMDAkbzEkZzEkdDE3NjE4OTMxMDUkajU1JGwwJGgw"
+                } else {
+                    postCoverImage = post.cover_image
+                }
+
                 Image(
-                    painter = painterResource(id = R.drawable.article_placeholder_image),
+                    painter = rememberAsyncImagePainter(postCoverImage), // use your placeholder image here
                     contentDescription = "Article Image",
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(220.dp)
+                        .height(120.dp),
+                    contentScale = ContentScale.Crop
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
