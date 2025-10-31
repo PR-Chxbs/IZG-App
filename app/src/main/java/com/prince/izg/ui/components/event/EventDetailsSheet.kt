@@ -19,14 +19,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.prince.izg.data.remote.dto.Event.EventResponse
+import kotlinx.coroutines.coroutineScope
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.rememberCoroutineScope
+import com.prince.izg.ui.endpoints.admin.viewmodel.event.EventViewModel
 
 
 @Composable
-fun EventDetailsSheet(event: EventResponse) {
+fun EventDetailsSheet(
+    event: EventResponse,
+    viewModel: EventViewModel,
+    token: String,
+    onClose: () -> Unit,
+    onNavigate: (Int) -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
     val formattedDate = remember(event.event_date) {
         try {
             val inputFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
@@ -103,5 +115,30 @@ fun EventDetailsSheet(event: EventResponse) {
             style = MaterialTheme.typography.bodySmall,
             color = Color.Gray
         )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Button(
+                onClick = {
+                    coroutineScope.launch {
+                        viewModel.deleteEvent(token, event.id)
+                        onClose()
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+            ) {
+                Text("Delete", color = Color.White)
+            }
+
+            Button(
+                onClick = {
+                    onClose()
+                    onNavigate(event.id)
+                }
+            ) {
+                Text("Edit")
+            }
+        }
     }
 }

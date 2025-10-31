@@ -16,6 +16,9 @@ sealed class Screen(val route: String) {
     // User extra
     object AddOrEditUser : Screen("editUser/{userId}")
 
+    // Event extra
+    object AddOrEditEvent : Screen("editEvent/{eventId}")
+
     // Post extra
     object CreatePost : Screen("createPost/{postId}")
     object ReadPost : Screen("readArticle/{postId}")
