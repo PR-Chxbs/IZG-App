@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.prince.izg.R
 import com.prince.izg.data.remote.dto.Post.PostResponse
 import com.prince.izg.ui.components.shared.TempConfirmDeleteDialog
@@ -131,8 +132,16 @@ fun ArticleCard(
                 .background(Color.White)
                 .padding(8.dp)
         ) {
+            var postCoverImage: String
+
+            if (post.cover_image.isNullOrEmpty()) {
+                postCoverImage = "https://plus.unsplash.com/premium_photo-1684581214880-2043e5bc8b8b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmxvZyUyMGNvdmVyfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000"
+            } else {
+                postCoverImage = post.cover_image
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.article_placeholder_image), // use your placeholder image here
+                painter = rememberAsyncImagePainter(postCoverImage),
                 contentDescription = "Article Image",
                 modifier = Modifier
                     .fillMaxWidth()

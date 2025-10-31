@@ -154,7 +154,7 @@ fun ArticleCard(
             var postCoverImage: String
 
             if (post.cover_image.isNullOrEmpty()) {
-                postCoverImage = "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?_gl=1*1it0i05*_ga*MTI1ODAzMjQ2Ny4xNzYxODkzMTAx*_ga_8JE65Q40S6*czE3NjE4OTMxMDAkbzEkZzEkdDE3NjE4OTMxMDUkajU1JGwwJGgw"
+                postCoverImage = "https://plus.unsplash.com/premium_photo-1684581214880-2043e5bc8b8b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmxvZyUyMGNvdmVyfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000"
             } else {
                 postCoverImage = post.cover_image
             }

@@ -59,17 +59,23 @@ fun EventCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column {
-            if (!event.image_url.isNullOrEmpty()) {
-                Image(
-                    painter = rememberAsyncImagePainter(event.image_url),
-                    contentDescription = event.name,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp)
-                        .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
-                    contentScale = ContentScale.Crop
-                )
+            var eventCoverImage: String
+
+            if (event.image_url.isNullOrEmpty()) {
+                eventCoverImage = "https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?_gl=1*1it0i05*_ga*MTI1ODAzMjQ2Ny4xNzYxODkzMTAx*_ga_8JE65Q40S6*czE3NjE4OTMxMDAkbzEkZzEkdDE3NjE4OTMxMDUkajU1JGwwJGgw"
+            } else {
+                eventCoverImage = event.image_url
             }
+
+            Image(
+                painter = rememberAsyncImagePainter(event.image_url),
+                contentDescription = event.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
+                contentScale = ContentScale.Crop
+            )
 
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
