@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.prince.izg.ui.components.event.EventCard
 import com.prince.izg.ui.components.event.EventDetailsSheet
+import com.prince.izg.ui.components.event.UserEventDetailsSheet
 import com.prince.izg.ui.endpoints.admin.viewmodel.event.EventViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -140,7 +141,7 @@ fun EventsScreen(
                     sheetState = sheetState,
                     dragHandle = { BottomSheetDefaults.DragHandle() }
                 ) {
-                    EventDetailsSheet(event = uiState.selectedEvent!!)
+                    UserEventDetailsSheet(event = uiState.selectedEvent!!)
                 }
             }
         }
